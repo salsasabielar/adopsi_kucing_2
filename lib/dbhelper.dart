@@ -24,7 +24,7 @@ class DbHelper {
   //buat tabel baru dengan nama itemm
   void _createDb(Database db, int version) async {
     await db.execute(''
-        'CREATE TABLE item (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,price INTEGER,kode TEXT,stok INTEGER)'
+        'CREATE TABLE item (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,kode TEXT,jenisKelamin TEXT, ras TEXT)'
         '');
   }
 
