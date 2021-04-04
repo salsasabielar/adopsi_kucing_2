@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'model/item.dart';
+import 'model/customer.dart';
 
 class DbHelper {
   static DbHelper _dbHelper;
@@ -26,23 +27,40 @@ class DbHelper {
     await db.execute(''
         'CREATE TABLE item (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,kode TEXT,jenisKelamin TEXT, ras TEXT)'
         '');
+    await db.execute(''
+        'CREATE TABLE customer (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,alamat TEXT, telp TEXT)'
+        '');
   }
 
-  //select databases
+  //select databases item
   Future<List<Map<String, dynamic>>> select() async {
     Database db = await this.initDb();
-    var mapList = await db.query('item', orderBy: 'name');
+    var mapList = await db.query('item', orderBy: 'kode');
     return mapList;
   }
 
-  //create databases
+  //select databases customer
+  Future<List<Map<String, dynamic>>> selectCustomer() async {
+    Database db = await this.initDb();
+    var mapList = await db.query('customer', orderBy: 'name');
+    return mapList;
+  }
+
+  //create databases item
   Future<int> insert(Item object) async {
     Database db = await this.initDb();
     int count = await db.insert('item', object.toMap());
     return count;
   }
 
-  //update databases
+  //create databases customer
+  Future<int> insertCustomer(Customer object) async {
+    Database db = await this.initDb();
+    int count = await db.insert('customer', object.toMap());
+    return count;
+  }
+
+  //update databases item
   Future<int> update(Item object) async {
     Database db = await this.initDb();
     int count = await db
@@ -50,10 +68,25 @@ class DbHelper {
     return count;
   }
 
-  //delete databases
+  //update databases customer
+  Future<int> updateCustomer(Customer object) async {
+    Database db = await this.initDb();
+    int count = await db.update('customer', object.toMap(),
+        where: 'id=?', whereArgs: [object.id]);
+    return count;
+  }
+
+  //delete databases item
   Future<int> delete(int id) async {
     Database db = await this.initDb();
     int count = await db.delete('item', where: 'id=?', whereArgs: [id]);
+    return count;
+  }
+
+  //delete databases customer
+  Future<int> deleteCustomer(int id) async {
+    Database db = await this.initDb();
+    int count = await db.delete('customer', where: 'id=?', whereArgs: [id]);
     return count;
   }
 
