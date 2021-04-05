@@ -100,6 +100,16 @@ class DbHelper {
     return itemList;
   }
 
+  Future<List<Customer>> getCustomerList() async {
+    var itemMapList = await select();
+    int count = itemMapList.length;
+    List<Customer> itemList = List<Customer>();
+    for (int i = 0; i < count; i++) {
+      itemList.add(Customer.fromMap(itemMapList[i]));
+    }
+    return itemList;
+  }
+
   factory DbHelper() {
     if (_dbHelper == null) {
       _dbHelper = DbHelper._createObject();
