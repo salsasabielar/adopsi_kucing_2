@@ -3,7 +3,7 @@
 HASIL SCREENSHOT
 <p>Tampilan Awal Daftar Kucing</p>
 
-![plot](./image/sebelumInsert1.jpeg)
+![plot](./image/SebelumInsert1.jpeg)
 
 <p>Tambah Data Kucing</p>
 
@@ -11,7 +11,7 @@ HASIL SCREENSHOT
 
 <p>Setelah Insert Data Kucing</p>
 
-![plot](./image/setelahInsert1.jpeg)
+![plot](./image/SetelahInsert1.jpeg)
 
 <p>Setelah Diedit</p>
 
