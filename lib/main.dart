@@ -12,13 +12,21 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.lightGreen,
       ),
       home: DefaultTabController(
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            title: Text("Adopsi Kucing"),
+            title: Text(
+              "Adopsi Kucing",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+            centerTitle: true,
             bottom: TabBar(
               tabs: [
                 Tab(

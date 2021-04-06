@@ -14,7 +14,7 @@ class FormCustomer extends StatefulWidget {
 class FormCustomerState extends State<FormCustomer> {
   Customer customer;
   FormCustomerState(this.customer);
-  TextEditingController nameController = TextEditingController();
+  TextEditingController nameCustomerController = TextEditingController();
   TextEditingController alamatController = TextEditingController();
   TextEditingController telpController = TextEditingController();
 
@@ -22,7 +22,7 @@ class FormCustomerState extends State<FormCustomer> {
   Widget build(BuildContext context) {
     //kondisi
     if (customer != null) {
-      nameController.text = customer.name;
+      nameCustomerController.text = customer.nameCustomer;
       alamatController.text = customer.alamat;
       telpController.text = customer.telp;
     }
@@ -40,7 +40,7 @@ class FormCustomerState extends State<FormCustomer> {
               Padding(
                 padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                 child: TextField(
-                  controller: nameController,
+                  controller: nameCustomerController,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     labelText: 'Nama Adopter',
@@ -77,7 +77,7 @@ class FormCustomerState extends State<FormCustomer> {
                 padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                 child: TextField(
                   controller: telpController,
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     labelText: 'Nomor Telepon',
                     border: OutlineInputBorder(
@@ -108,13 +108,13 @@ class FormCustomerState extends State<FormCustomer> {
                           if (customer == null) {
                             // tambah data
                             customer = Customer(
-                              nameController.text,
+                              nameCustomerController.text,
                               alamatController.text,
                               telpController.text,
                             );
                           } else {
                             // ubah data
-                            customer.name = nameController.text;
+                            customer.nameCustomer = nameCustomerController.text;
                             customer.alamat = alamatController.text;
                             customer.telp = telpController.text;
                           }
@@ -138,9 +138,7 @@ class FormCustomerState extends State<FormCustomer> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
+                        
                       ),
                     ),
                   ],

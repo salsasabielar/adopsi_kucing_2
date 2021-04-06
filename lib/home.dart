@@ -39,7 +39,9 @@ class HomeState extends State<Home> {
           alignment: Alignment.bottomCenter,
           child: SizedBox(
             width: double.infinity,
+            height: 55,
             child: RaisedButton(
+              color: Colors.lightGreen,
               child: Text(
                 "Tambah Kucing",
                 style: TextStyle(fontSize: 16),
@@ -81,15 +83,15 @@ class HomeState extends State<Home> {
           elevation: 2.0,
           child: ListTile(
             leading: CircleAvatar(
-              backgroundColor: Colors.red,
-              child: Icon(Icons.ad_units),
+              backgroundColor: Colors.deepOrangeAccent,
+              child: Icon(Icons.party_mode),
             ),
             title: Text(
               "[" +
                   this.itemList[index].kode +
                   "] " +
                   this.itemList[index].name,
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
             ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,14 +99,14 @@ class HomeState extends State<Home> {
                 Text(
                   "Ras : " + this.itemList[index].ras,
                   style: TextStyle(
-                    fontSize: 17,
+                    fontSize: 15,
                     color: Colors.black,
                   ),
                 ),
                 Text(
                   "Jenis Kelamin : " + this.itemList[index].jenisKelamin,
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 15,
                     color: Colors.black,
                   ),
                   textAlign: TextAlign.start,
@@ -139,15 +141,21 @@ class HomeState extends State<Home> {
   //update List item
   void updateListView() {
     final Future<Database> dbFuture = dbHelper.initDb();
-    dbFuture.then((database) {
-      //TODO 1 Select data dari DB
-      Future<List<Item>> itemListFuture = dbHelper.getItemList();
-      itemListFuture.then((itemList) {
-        setState(() {
-          this.itemList = itemList;
-          this.count = itemList.length;
-        });
-      });
-    });
+    dbFuture.then(
+      (database) {
+        //TODO 1 Select data dari DB
+        Future<List<Item>> itemListFuture = dbHelper.getItemList();
+        itemListFuture.then(
+          (itemList) {
+            setState(
+              () {
+                this.itemList = itemList;
+                this.count = itemList.length;
+              },
+            );
+          },
+        );
+      },
+    );
   }
 }

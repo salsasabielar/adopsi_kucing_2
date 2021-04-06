@@ -29,41 +29,45 @@ class HomeCustomerState extends State<HomeCustomer> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text('Daftar Adopter'),
+        title: Text('Daftar Adopter', style: TextStyle(fontSize: 16)),
       ),
-      body: Column(children: [
-        Expanded(
-          child: createListView(),
-        ),
-        Container(
-          alignment: Alignment.bottomCenter,
-          child: SizedBox(
-            width: double.infinity,
-            child: RaisedButton(
-              child: Text(
-                "Tambah Adopter",
-                style: TextStyle(fontSize: 16),
-              ),
-              onPressed: () async {
-                // membuat sistem menunggu sampai terjadi Blocking
-                var customer = await navigateToEntryForm(context, null);
-                // membuat sistem menunggu sampai terjadi Blocking
-                if (customer != null) {
-                  //TODO 2 Panggil Fungsi untuk Insert ke DB
-                  int result = await dbHelper.insertCustomer(customer);
-                  if (result > 0) {
-                    updateListView();
+      body: Column(
+        children: [
+          Expanded(
+            child: createListView(),
+          ),
+          Container(
+            alignment: Alignment.bottomCenter,
+            child: SizedBox(
+              width: double.infinity,
+              height: 55,
+              child: RaisedButton(
+                color: Colors.lightGreen,
+                child: Text(
+                  "Tambah Adopter",
+                  style: TextStyle(fontSize: 16),
+                ),
+                onPressed: () async {
+                  // membuat sistem menunggu sampai terjadi Blocking
+                  var customer = await navigateToFormCustomer(context, null);
+                  // membuat sistem menunggu sampai terjadi Blocking
+                  if (customer != null) {
+                    //TODO 2 Panggil Fungsi untuk Insert ke DB
+                    int result = await dbHelper.insertCustomer(customer);
+                    if (result > 0) {
+                      updateListView();
+                    }
                   }
-                }
-              },
+                },
+              ),
             ),
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 
-  Future<Customer> navigateToEntryForm(
+  Future<Customer> navigateToFormCustomer(
       BuildContext context, Customer customer) async {
     var result = await Navigator.push(context,
         MaterialPageRoute(builder: (BuildContext context) {
@@ -75,6 +79,7 @@ class HomeCustomerState extends State<HomeCustomer> {
   ListView createListView() {
     TextStyle textStyle = Theme.of(context).textTheme.headline5;
     return ListView.builder(
+      shrinkWrap: true,
       itemCount: count,
       itemBuilder: (BuildContext context, int index) {
         return Card(
@@ -82,27 +87,27 @@ class HomeCustomerState extends State<HomeCustomer> {
           elevation: 2.0,
           child: ListTile(
             leading: CircleAvatar(
-              backgroundColor: Colors.red,
-              child: Icon(Icons.ad_units),
+              backgroundColor: Colors.deepOrangeAccent,
+              child: Icon(Icons.party_mode),
             ),
             title: Text(
-              this.customerList[index].name,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              this.customerList[index].nameCustomer,
+              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
             ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "No. Telp : " + this.customerList[index].telp,
+                  this.customerList[index].telp,
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 15,
                     color: Colors.black,
                   ),
                 ),
                 Text(
-                  "Alamat : " + this.customerList[index].alamat,
+                  this.customerList[index].alamat,
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 15,
                     color: Colors.black,
                   ),
                   textAlign: TextAlign.start,
@@ -112,7 +117,7 @@ class HomeCustomerState extends State<HomeCustomer> {
             trailing: GestureDetector(
               child: Icon(Icons.delete),
               onTap: () async {
-                //TODO 3 Panggil Fungsi untuk Delete dari DB berdasarkan Item
+                //TODO 3 Panggil Fungsi untuk Delete dari DB berdasarkan Customer
                 int result =
                     await dbHelper.deleteCustomer(this.customerList[index].id);
                 if (result > 0) {
@@ -121,8 +126,8 @@ class HomeCustomerState extends State<HomeCustomer> {
               },
             ),
             onTap: () async {
-              var customer =
-                  await navigateToEntryForm(context, this.customerList[index]);
+              var customer = await navigateToFormCustomer(
+                  context, this.customerList[index]);
               //TODO 4 Panggil Fungsi untuk Edit data
               int result = await dbHelper.updateCustomer(customer);
               if (result > 0) {
@@ -135,13 +140,13 @@ class HomeCustomerState extends State<HomeCustomer> {
     );
   }
 
-  //update List item
+  //update List customer
   void updateListView() {
     final Future<Database> dbFuture = dbHelper.initDb();
     dbFuture.then((database) {
       //TODO 1 Select data dari DB
-      Future<List<Customer>> itemListFuture = dbHelper.getCustomerList();
-      itemListFuture.then((customerList) {
+      Future<List<Customer>> customerListFuture = dbHelper.getCustomerList();
+      customerListFuture.then((customerList) {
         setState(() {
           this.customerList = customerList;
           this.count = customerList.length;

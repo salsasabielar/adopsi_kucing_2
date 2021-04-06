@@ -17,7 +17,7 @@ class DbHelper {
     Directory directory = await getApplicationDocumentsDirectory();
     String path = directory.path + 'item.db';
     //create, read databases
-    var itemDatabase = openDatabase(path, version: 5, onCreate: _createDb);
+    var itemDatabase = openDatabase(path, version: 6, onCreate: _createDb);
     //mengembalikan nilai object sebagai hasil dari fungsinya
     return itemDatabase;
   }
@@ -28,7 +28,7 @@ class DbHelper {
         'CREATE TABLE item (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,kode TEXT,jenisKelamin TEXT, ras TEXT)'
         '');
     await db.execute(''
-        'CREATE TABLE customer (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,alamat TEXT, telp TEXT)'
+        'CREATE TABLE customer (id INTEGER PRIMARY KEY AUTOINCREMENT,nameCustomer TEXT,alamat TEXT, telp TEXT)'
         '');
   }
 
@@ -42,7 +42,7 @@ class DbHelper {
   //select databases customer
   Future<List<Map<String, dynamic>>> selectCustomer() async {
     Database db = await this.initDb();
-    var mapList = await db.query('customer', orderBy: 'name');
+    var mapList = await db.query('customer', orderBy: 'nameCustomer');
     return mapList;
   }
 
@@ -101,13 +101,13 @@ class DbHelper {
   }
 
   Future<List<Customer>> getCustomerList() async {
-    var itemMapList = await select();
-    int count = itemMapList.length;
-    List<Customer> itemList = List<Customer>();
+    var customerMapList = await selectCustomer();
+    int count = customerMapList.length;
+    List<Customer> customerList = List<Customer>();
     for (int i = 0; i < count; i++) {
-      itemList.add(Customer.fromMap(itemMapList[i]));
+      customerList.add(Customer.fromMap(customerMapList[i]));
     }
-    return itemList;
+    return customerList;
   }
 
   factory DbHelper() {
