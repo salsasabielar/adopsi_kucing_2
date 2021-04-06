@@ -1,5 +1,38 @@
 # adopsi_kucing_2
 
+HASIL SCREENSHOT
+<p>Tampilan Awal Daftar Kucing</p>
+
+![plot](./image/sebelumInsert1.jpeg)
+
+<p>Tambah Data Kucing</p>
+
+![plot](./image/insert1.jpeg)
+
+<p>Setelah Insert Data Kucing</p>
+
+![plot](./image/setelahInsert1.jpeg)
+
+<p>Setelah Diedit</p>
+
+![plot](./image/edit1.jpeg)
+
+<p>Tampilan Awal Daftar Adopter</p>
+
+![plot](./image/sebelumInsert.jpeg)
+
+<p>Tambah Data Adopter</p>
+
+![plot](./image/insert2.jpeg)
+
+<p>Setelah Insert Data Adopter</p>
+
+![plot](./image/setelahInsert.jpeg)
+
+<p>Setelah Diedit</p>
+
+![plot](./image/edit2.jpeg)
+
 A new Flutter project.
 
 ## Getting Started
